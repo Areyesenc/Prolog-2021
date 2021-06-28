@@ -27,6 +27,7 @@ fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegist
 % Este es un ejemplo de socialNetworkPost en un TDA sin sesión activa, debe retornar false
 fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), fecha(25, 5, 2021, F2), socialNetworkPost(Sn3, F2, “buenas vacaciones”, [ ], Sn4).
 
+
 ;testing predicado socialNetworkLogin y socialNetworkFollow
 ;Se asume que de aquí en adelante comienza la publicación con ID 0 y luego se incrementan los ID en 1
 % Ejemplo en que “coni raf” sigue a “jperez”
