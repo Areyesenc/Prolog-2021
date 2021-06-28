@@ -1,3 +1,6 @@
+
+%funciones
+
 fecha(D,M,Y,F):- F = date(D,M,Y).
 
 socialNetwork(Name,Date,Sn2):- Sn2  = [Name,Date,[],0].
@@ -5,6 +8,8 @@ socialNetwork(Name,Date,Sn2):- Sn2  = [Name,Date,[],0].
 socialNetworkRegister(Sn,Date,Username,Password,SnN):- getUsers(Sn,Users), append(Users,[[Date,Username,Password,[]]],New), updateUsers(Sn,New,SnN).   
 socialNetworkRegister(Sn,Username,_,Sn):- not(checkUser(Sn,Username)).   
 
+socialNetworkFollow(Sn1,Username,Sn2):- Sn1 = [N,D,Users,_],checkUser(Sn1,Username),updateFollowers(Sn1,Username,Users,Final),Sn2 = [N,D,Final,0].
+socialNetworkPost(Sn1,Date,Post,List,Sn2):- Sn1 = [Name,_,Users,_],updatePost(Sn1,Post,List,Users,Final),Sn2 = [Name,Date,Final,0].
 
 getUsers(Sn,Users):- Sn = [_,_,Users,_].
 
