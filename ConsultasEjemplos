@@ -1,0 +1,79 @@
+Script básico Pruebas Prolog
+
+;testing constructor socialnetwork
+; En los ejemplos asumo que tienen un constructor de “fecha” que en su último argumento entrega un TDA “Fecha”.
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1).
+% Se crea una fecha y se deja en la variable F, luego se pasa esa fecha como argumento del constructor de socialNetwork, el TDA con la red social creada queda en la variable “Sn1”
+;testing predicado socialNetworkRegister
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2).
+% Sn2 es una variable con el TDA SocialNetwork y el usuario “mmental” creado.
+
+%El siguiente ejemplo debe retornar false debido a que el usuario ya existe
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “mmental”, “gggggg1234”, Sn4).
+
+;testing predicado socialNetworkLogin y socialNetworkPost
+% Este ejemplo es un post del usuario “mmental” destinado a todos
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, “mmental”, “asdf”, Sn5), socialNetworkPost(Sn5, F2, “este es un mensaje destinado a todos”, [ ], Sn6).
+
+% Este ejemplo es un post del usuario “coni raf” al usuario “mmental”
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, “coni raf”, “vvbaa5”, Sn5), socialNetworkPost(Sn5, F2, “este es una publicación para mmental”, [“mmental”], Sn6).
+
+% Este ejemplo es un login incorrecto de “coni raf”, debe retornar false
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkLogin(Sn3, “coni raf”, “1234”, Sn4).
+
+% Este es un ejemplo de login en un TDA socialNetwork con ya una sesión activa, debe retornar false
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkLogin(Sn3, “coni raf”, “vvbaa5”, Sn4), socialNetworkLogin(Sn4, “mmental”, “asdf”, Sn5).
+
+% Este es un ejemplo de socialNetworkPost en un TDA sin sesión activa, debe retornar false
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), fecha(25, 5, 2021, F2), socialNetworkPost(Sn3, F2, “buenas vacaciones”, [ ], Sn4).
+
+;testing predicado socialNetworkLogin y socialNetworkFollow
+;Se asume que de aquí en adelante comienza la publicación con ID 0 y luego se incrementan los ID en 1
+% Ejemplo en que “coni raf” sigue a “jperez”
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, “coni raf”, “vvbaa5”, Sn5), socialNetworkFollow(Sn5, “jperez”, Sn6).
+
+% Ejemplo en que “mmental” se intenta seguir a si mismo, debe retornar false
+fecha(24, 5, 2021, F), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, “mmental”, “asdf”, Sn5), socialNetworkFollow(Sn5, “mmental”, Sn6).
+
+;testing predicado socialNetworkShare
+% Ejemplo en que “coni raf” comparte con el usuario “jperez” la publicación con id 0 de “mmental”, previamente “coni raf” debe seguir a “jperez” para poder compartirle la publicación.
+fecha(24, 5, 2021, F), fecha(25, 5, 2021, F2), fecha(1, 6, 2021, F3), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), socialNetworkLogin(Sn4, “mmental”, “asdf”, Sn5), socialNetworkPost(Sn5, F2, “este es un mensaje destinado a todos”, [ ], Sn6), socialNetworkLogin(Sn6, “coni raf”, “vvbaa5”, Sn7), socialNetworkFollow(Sn7, “jperez”, Sn8), socialNetworkLogin(Sn8, “coni raf”, “vvbaa5”, Sn9), socialNetworkShare(Sn9, F3, 0, [ “jperez” ], Sn10).
+;testing socialnetworkToString, con login y sin login, en Str1 está la representación sin login y en Str2 está la representación con login, es decir debe mostrar sólo lo relacionado al usuario “coni raf”.
+fecha(24, 5, 2021, F), fecha(25, 5, 2021, F2), fecha(1, 6, 2021, F3), socialNetwork(“failbok”, F, Sn1), socialNetworkRegister(Sn1, “mmental”, “asdf”, Sn2), socialNetworkRegister(Sn2, “coni raf”, “vvbaa5”, Sn3), socialNetworkRegister(Sn3, “jperez”, “jjjj98765”, Sn4), socialNetworkLogin(Sn4, “mmental”, “asdf”, Sn5), socialNetworkPost(Sn5, F2, “este es un mensaje destinado a todos”, [ ], Sn6), socialNetworkLogin(Sn6, “coni raf”, “vvbaa5”, Sn7), socialNetworkFollow(Sn7, “jperez”, Sn8), socialNetworkLogin(Sn8, “coni raf”, “vvbaa5”, Sn9), socialNetworkShare(Sn9, F3, 0, [ “jperez” ], Sn10), socialNetworkLogin(Sn10, “coni raf”, “vvbaa5”, Sn11), socialNetworkToString(Sn10, Str1), socialNetworkToString(Sn11, Str2), display(Str1), display(Str2).
+% Recordar que en Str1 y Str2 hay saltos de línea (carácter ‘\n’ ), mientras que sólo cuando se consulte al predicado “display” se mostrará de forma legible el TDA.
+% Ejemplo de lo que mostraría display de “Str1”:
+####### Red social “Failbok” #######
+Creada el día 24/05/2021
+*** Usuarios registrados ***
+mmental
+    Sigue a:
+coni raf
+    Sigue a: jperez
+jperez
+    Sigue a: 
+-------------------------------
+*** Publicaciones ***
+ID: 0
+El día 25/05/2021 “mmental” publicó:
+“este es un mensaje destinado a todos”
+Destinatarios: Todos
+Compartido:
+    El día 1/6/2021 por “Coni raf” hacia: “jperez”
+*** Fin publicaciones ***
+-------------------------------
+
+% Ejemplo de lo que mostraría display de “Str2”:
+####### Red social “Failbok” #######
+Creada el día 24/05/2021
+*** Usuario con sesión iniciada ***
+coni raf
+    Sigue a: jperez
+-------------------------------
+*** Publicaciones ***
+Sin publicaciones
+*** Fin publicaciones ***
+-------------------------------
+*** Publicaciones compartidas ***
+El día 1/6/2021 compartió con “jperez” la publicación con id 0 de “mmental”: “este es un mensaje destinado a todos”.
+*** Fin publicaciones compartidas ***
+-------------------------------
