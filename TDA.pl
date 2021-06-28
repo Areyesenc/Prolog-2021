@@ -34,8 +34,15 @@ get_date(Sn,X):- Sn = [_,X,_,_].
 get_usernames([],[]).
 get_usernames(Users,[Username|ResT]):- Users = [H|T], get_usernames(T,ResT),H = [Username,_,_,_].
 
+getPost([],_,[]).
+getPost(Users,PostId,Post):- Users = [H|_],H = [_,_,Post1,_],Post1 = [Post,PostId,_,_].
+
+
+
 %Modificadores
 
 updateUsers(Sn,New,SnN):- Sn = [N,D,_,L], SnN = [N,D,New,L].
 
-updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User).
+updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,Post,Exist],User = H1,append([Username],Exist,New),select([User,Pass,Post,Exist],Users,Users3),append([[User,Pass,Post,New]],Users3,New2),Final = New2. 
+
+updatePost(Sn1,Text,Follow,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,[Exist,[],0,[],0],Follow],User = H1,append([Text],Exist,New),select([User,Pass,[Exist,[],0,[],0],_],Users,Users3),length(Exist,Len),Len1 is Len+1,string_concat(User,Len1,Nex),append([[User,Pass,[New,Nex,0,[],0],Follow]],Users3,New2),Final = New2. 
