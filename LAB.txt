@@ -1,0 +1,204 @@
+Laboratorio prolog
+
+(Cambios menores pueden incorporarse en futuras versiones a fin de aclarar o corregir errores)
+(Sus dudas las puede expresar en este mismo enunciado, incluso puede responder a preguntas de compañeros en caso de que conozca la respuesta)
+Fecha de Entrega: Ver calendario clase a clase donde se señala el hito
+Objetivo del laboratorio: Aplicar conceptos del paradigma de programación lógico usando el lenguaje de programación Prolog en la resolución de un problema acotado.
+Resultado esperado: Programa que simula las funcionalidades y comportamientos de una red social.
+Profesor responsable: Víctor Flores (al hacer consultas en este documento, procurar hacer la mención a @Víctor Flores Sánchez  (victor.floress@usach.cl) para que las notificaciones de sus consultas lleguen al profesor correspondiente)
+
+
+Requerimientos No Funcionales obligatorios. Algunos son ineludibles, esto quiere decir que al no cumplir con dicho requerimiento, su proyecto será evaluado con la nota mínima.
+(obligatorio) Autoevaluación: Incluir autoevaluación de cada uno de los requerimientos funcionales (obligatorios y extras) solicitados.
+(obligatorio) Lenguaje: La implementación debe ser en el lenguaje de programación Prolog.
+(obligatorio) Versión: Usar Swi-prolog versión 8.x.x .
+(1 pts) Documentación: Todos los predicados deben estar debidamente comentados. Indicando descripción de la relación, términos de entrada y de salida.
+(2.5 pts) Historial: Historial de trabajo en Github tomando en consideración la evolución en el desarrollo de su proyecto en distintas etapas. Se requieren al menos 10 commits distribuidos en un periodo de tiempo mayor o igual a 2 semanas (no espere a terminar la materia para empezar a trabajar en el laboratorio. Puede ir haciendo pequeños incrementos conforme avance el curso). Los criterios que se consideran en la evaluación de este ítem son: fecha primer commit, fecha último commit, total commits y máximo de commits diarios. A modo de ejemplo (y solo como una referencia), si hace todos los commits el día antes de la entrega del proyecto, este ítem tendrá 0 pts. De manera similar, si hace dos commits dos semanas antes de la entrega final y el resto los concentra en los últimos dos días, tendrá una evaluación del 25% para este ítem (0.375 pts). Por el contrario, si demuestra constancia en los commits (con aportes claros entre uno y otro) a lo largo del periodo evaluado, este ítem será evaluado con el total del puntaje.
+(obligatorio) Ejemplos: Al final de su código incluir al menos 3 ejemplos de uso para cada  uno de los predicados correspondientes a requerimientos funcionales obligatorios y los extra. Solo se revisarán aquellas funcionalidades para las que existan los ejemplos provistos.
+(obligatorio) Prerrequisitos: Para cada predicado se establecen prerrequisitos. Estos deben ser cumplidos para que se proceda con la evaluación de la funcionalidad implementada. Ej: Para evaluar la funcionalidad login, debe estar implementada la funcionalidad create.
+
+
+Requerimientos Funcionales. Para que el requerimiento sea evaluado, DEBE cumplir con el prerrequisito de evaluación y requisito de implementación. En caso contrario la función no será evaluada.
+(0.5 pts) TDAs. Implementar abstracciones apropiadas para el problema. Recomendamos leer el enunciado completo a fin de que analice el problema y determine el o los TDAs y representaciones apropiadas para la implementación de cada uno.
+Para la implementación debe regirse por la estructura de especificación e implementación de TDA vista en clases: Representación, Constructores, Predicados de Pertenencia, Selectores, Modificadores y Otros predicados. Procurar hacer un uso adecuado de esta estructura a fin de no afectar la eficiencia de sus predicados. En el resto de los predicados se debe hacer un uso adecuado de la implementación del TDA (ej: usar selectores, modificadores, constructores, según sea el caso. No basta con implementar un TDA y luego NO hacer uso del mismo). Solo implementar los predicados necesarios dentro de esta estructura.
+Dejar claramente documentado con comentarios en el código aquello que corresponde a la estructura base del TDA. Una estructura base que deberá considerar para el resto de los predicados corresponde a “socialnetwork” que corresponde al contenedor de sesión activa, usuarios, publicaciones, etc.
+Debe contar además con representaciones complementarias para que los usuarios puedan tener información relativa a sus credenciales de acceso y otros elementos que considere relevantes para abordar el problema.
+De igual forma, las publicaciones, además de información relativa a fecha de publicación, ID único incremental (se va generando un correlativo a partir de la última publicación registrada), debe contar con información relativa a reacciones, respuestas, contenido compartido, tipo de publicación (texto, video, url, foto, audio), y otros datos que considere relevante para abordar el problema.
+
+Prerrequisitos para evaluación
+Ninguno
+Requisitos de implementación
+- Usar estructuras basadas en listas
+- Especificar representación de manera clara para cada TDA implementado (en el informe y en el código a través de comentarios). Luego implementar constructores, predicados de pertenencia, y según se requiera selectores, modificadores y otros predicados que pueda requerir para las otras funcionalidades requeridas a continuación.
+Funcionalidades mínimas requeridas
+;Constructor socialnetwork
+String X Date X OUT SocialNetwork
+socialNetwork(Name, Date, SOut).
+;Date es una lista de: Integer X Integer X Integer
+date(DD, MM, YYYY).
+Ejemplo de otros predicados asociados al mismo TDA u otros TDAs (Solo de referencia. Cada estudiante define sus propios TDAs)
+user( …. , UOut).
+publication( … , POut ).
+
+
+(0.5 pts) socialNetworkRegister: Predicado que permite consultar el valor que toma un TDA SocialNetwork al ocurrir el registro de un nuevo usuario. Para esto se ingresa un SocialNetwork inicial, nombre del usuario (identificador único, se debe verificar que no exista para su correcto registro), contraseña y el SocialNetwork resultante luego del registro. El retorno del predicado es true en caso que se pudo satisfacer el registro del usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs
+Requisitos de implementación
+- Debe funcionar cuando se entrega en su último argumento un TDA SocialNetwork como variable sin valor como también teniendo un valor. 
+En el caso de ser una variable esta se unifica con el TDA SocialNetwork resultante luego de registrar al usuario.
+En caso de ser una variable con un valor concreto se verifica si el SocialNetwork cumple con ser el resultante luego de registrar al usuario.
+En caso que el usuario a registrar ya existe en el TDA “Sn1”, el predicado debe retornar false.
+Dominio
+socialNetwork X date X string X string X socialNetwork
+Encabezado
+socialNetworkRegister(Sn1, Fecha, Username, Password, Sn2).
+Ejemplos
+socialNetworkRegister(S1, “2021-05-01”, “user”, “pass”, S2).
+
+
+(0.5 pts) socialNetworkLogin: Predicado que permite autenticar a un usuario registrado. Si la autenticación es válida (i.e., que el usuario existe y su contraseña es correcta). El retorno es true. La actualización del stack incorpora al usuario autenticado en sesión activa (fundamental para que los predicados siguientes puedan funcionar).
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkRegister.
+Requisitos de implementación
+- Si “Sn2” es una variable, se debe unificar con el TDA SocialNetwork resultante luego de agregar una sesión activa con el usuario que realizó login.
+- Si el usuario y/o la contraseña son incorrectas se debe retornar false.
+Dominio
+socialNetwork X string X string X socialNetwork
+Encabezado
+socialNetworkLogin(Sn1, Username, Password, Sn2).
+Ejemplos
+socialNetworkLogin(Sn1, “user”, “pass”, Sn2).
+
+
+(0.5 pts) socialNetworkPost: Predicado que permite a un usuario con sesión iniciada en la plataforma realizar una nueva publicación propia o dirigida a otros usuarios. Cada publicación registra el autor de la misma (obtenido desde la sesión iniciada con login), fecha de publicación (tipo Date), el tipo de publicación (“photo”, “video”, “url”, “text”, “audio”) y el contenido de la publicación (solo debe ser un string). El retorno es true si se puede satisfacer en “Sn2” el TDA SocialNetwork con la nueva publicación incluida y sin la sesión activa del usuario que realizó la publicación.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin
+Requisitos de implementación
+-Debe funcionar cuando se entrega en su último argumento “Sn2” un socialNetwork como variable sin valor como también teniendo un valor. 
+En el caso de ser una variable esta se unifica con el TDA SocialNetwork resultante luego de agregar la publicación y eliminar la sesión del usuario activo.
+En caso de tener un valor, se verifica si “Sn2 cumple con ser el resultante luego de haber realizado la publicación y sin la sesión del usuario activo.
+- En caso de no haber una sesión activa debe retornar false.
+- La fecha puede estar representada como lo estime conveniente, pero debe indicarlo en los ejemplos de uso.
+- Solo se puede publicar mensajes en cuentas de terceros si es que está dentro de la lista de contactos del usuario
+Dominio
+socialNetwork X date X string X string list x socialNetwork
+Encabezado
+socialNetworkPost(Sn1, Fecha, Texto, ListaUsernamesDest, Sn2).
+Ejemplos
+socialNetworkPost(Sn1, “2021-04-30”, “hola a algunos”, [“u1” “u2 “u3”], Sn2).
+socialNetworkPost(Sn1, “2021-05-03”, “hola a todos”, [ ], Sn2).
+
+
+(0.5 pts) socialNetworkFollow: Predicado que permite a un usuario con sesión iniciada en la plataforma seguir a otro usuario. El retorno es true si se puede satisfacer en “Sn2” el TDA SocialNetwork con algún indicativo de que el usuario que tiene sesión iniciada en “Sn1”ahora sigue al usuario “U” y sin la sesión activa del usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin.
+Requisitos de implementación
+- Si no existe el “username” al cual se desea seguir, debe retornar false.
+- Si no existe sesión iniciada por algún usuario, debe retornar false.
+- Un usuario no se puede seguir a si mismo, en ese caso se retorna false.
+Dominio
+socialNetwork X string X socialNetwork
+Encabezado
+socialNetworkFollow(Sn1, Username, Sn2).
+Ejemplos
+socialNetworkFollow(Sn1, “alguien”, Sn2).
+
+
+(0.5 pts) socialNetworkShare: Predicado que permite a un usuario con sesión iniciada en la plataforma compartir contenido de otro usuario en su propio espacio o dirigido a otros usuarios más. El retorno es true si se puede satisfacer en “Sn2” el TDA SocialNetwork con un registro de la publicación compartida y sin la sesión activa del usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin y socialNetworkPost.
+Requisitos de implementación
+- Procurar que el contenido compartido quede vinculado de alguna manera al usuario que creó originalmente la publicación lo cual se debe resolver internamente a partir de postID.
+- Solo se puede compartir con usuarios que estén dentro de la lista de contactos. Si no están se omiten.
+Dominio
+socialNetwork X date X integer X string list X socialNetwork
+Encabezado
+socialNetworkShare(Sn1, Fecha, PostId, ListaUsernamesDest, Sn2).
+Ejemplos
+socialNetworkShare(Sn1, “2021-04-30”, 54, [“u1”, “u5”], Sn2).  /* la publicación con ID 54 se comparte en la cuenta del usuario que tiene sesión iniciada en Sn1 hacia los usuarios “u1” y “u5”. En “Sn2” se encuentra la publicación compartida y no hay sesión iniciada. */
+socialNetworkShare(Sn1, “2021-04-30”, 54, [ ], Sn2). /*la publicación con ID 54 se comparte en la cuenta del usuario que tiene sesión iniciada en Sn1. En “Sn2” se encuentra la publicación compartida y no hay sesión iniciada. */
+
+
+(0.5 pts) socialNetworkToString: Predicado que permite obtener una representación de un TDA socialNetwork como un string posible de visualizar de forma comprensible al usuario. Debe hacer uso del char ‘\n’ para los saltos de línea. No utilice los predicados write y display dentro de este requerimiento, ya que debe quedar en el último argumento un string el cual pueda luego ser pasado como argumento a los predicados “write” o “display” para poder visualizarlo de forma comprensible al usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicados socialNetworkRegister, socialNetworkPost, socialNetworkFollow y socialNetworkShare.
+Requisitos de implementación
+- El string resultante debe quedar en el segundo argumento, al ser impreso por la función write o display debe ilustrar con claridad los elementos de socialnetwork (i.e., usuarios y sus publicaciones, sus redes de contactos, etc.).
+- El resultado de aplicar socialnetworkToString directamente sobre socialnetwork sin tener una sesión activa de por medio, imprime todo lo que haya en social network (ver anexo al final de este enunciado para un ejemplo completo).
+- El resultado de aplicar socialnetworkToString  teniendo una sesión activa entrega como resultado todos los antecedentes del usuario que tiene la sesión activa (publicaciones, contactos, reacciones, publicaciones compartidas) junto a los detalles del usuario que inició sesión (nombre, fecha de creación de cuenta).
+Dominio
+socialNetwork X string
+Encabezado
+socialnetworkToString(Sn1, StrOut).
+Ejemplos
+socialnetworkTostring( Sn1, Result).
+
+
+De los siguientes predicados implementar de manera libre los que estime conveniente para alcanzar un 7.0. Considere igual los prerrequisitos señalados. La nota máxima en total será un 7.0 aun cuando se desborde puntaje.
+(1 pts) comment: Predicado que permite a un usuario con sesión iniciada en la plataforma comentar publicaciones y otros comentarios existentes (propios o de terceros). El retorno es true si se puede satisfacer en “Sn2” el TDA SocialNetwork con un registro del comentario realizado y sin la sesión activa del usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin y socialNetworkPost, socialNetworkFollow, socialNetworkShare, socialNetworkToString
+Requisitos de implementación
+- Procurar que el comentario realizado quede vinculado de alguna manera al usuario que creó originalmente la publicación lo cual se debe resolver internamente a partir de postID.
+- Solo se puede compartir con usuarios que estén dentro de la lista de contactos. Si no están se retorna false.
+- CommentID podría ser 0, en tal caso significa que el comentario es directamente a una publicación, en cambio cuando commentID es distinto de 0 es porque se está comentando otro comentario (el cual igualmente es un comentario de postID).
+- Si se ingresa un commentID de un comentario que no fue realizado al postID, se debe retornar false.
+Dominio
+socialNetwork X date X integer X integer X string X socialNetwork
+Encabezado
+comment (Sn1, Fecha, PostId, CommentId, TextoComentario, Sn2).
+Ejemplos
+comment( Sn1, “2021-05-04”, 4, 0, “Este es un comentario sobre la publicación con id 4”, Sn2).
+comment( Sn1, “2021-05-04”, 4, 58, “Este es un comentario sobre la publicación con id 4, en particular sobre el comentario con id 58”, Sn2).
+
+
+(0.5 pts) socialNetworkLike: Predicado que permite a un usuario con sesión iniciada en la plataforma reaccionar a publicaciones o comentarios existentes (propias o de terceros) a través de “me gusta”. El retorno es true si se puede satisfacer en “Sn2” el TDA SocialNetwork con un  registro del like realizado y sin la sesión activa del usuario.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin y socialNetworkPost, socialNetworkFollow, socialNetworkShare, socialNetworkToString
+Requisitos de implementación
+- Procurar que el like realizado quede vinculado de alguna manera al usuario que creó originalmente la publicación lo cual se debe resolver internamente a partir de postID.
+- Se puede dar like a cualquier publicación, de cualquier usuario.
+- CommentID podría ser 0, en tal caso significa que el like es directamente a una publicación, en cambio cuando commentID es distinto de 0 es porque se está dando like a un comentario (el cual debe ser un comentario de postID).
+- Si se ingresa un commentID de un comentario que no fue realizado al postID, se debe retornar false.
+Dominio
+socialNetwork X date X integer X integer X socialNetwork
+Encabezado
+socialNetworkLike (Sn1, Fecha, PostId, CommentId, Sn2).
+Ejemplos
+socialNetworkLike( Sn1, “2021-05-04”, 4, 0, Sn2). ; Este es un like al post con id 4.
+socialNetworkLike( Sn1, “2021-05-04”, 4, 58, Sn2). ; Este es un like al comentario con id 58 que está en el post con id 4.
+
+
+(1 pts) socialNetworkViral: Predicado que permite consultar si cierto listado de publicaciones corresponden a contenido viral o no, esto es, determinar si estas publicaciones han sido compartidas al menos K veces.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin y socialNetworkPost, socialNetworkFollow, socialNetworkShare, socialNetworkToString, socialNetworkLike
+Requisitos de implementación
+El predicado debe unificar la variable “postIds” con el listado de ids de publicaciones que tienen más de “thresholdK” likes.
+Si se pasa como argumento en “postIds” un listado de ids, entonces se debe comprobar que todas esas publicaciones tienen más de “thresholdK” likes.
+Basta con que un postId del listado no cumpla el criterio para que todo el predicado retorne false.
+Dominio
+socialNetwork X number X integer list
+Encabezado
+socialNetworkViral(socialNetwork, thresholdK, postIds).
+Ejemplos
+socialNetworkViral(Sn1, 50, X). ; Entrega en la variable X un listado con los PostIds que se les ha dado like más de 50 veces.
+socialNetworkViral(Sn1, 50, [2, 4]). ; Comprueba si las publicaciones con id 2 y con id 4 se les ha dado like más de 50 veces.
+
+
+(1 pts) socialNetworkSearch: Predicado que permite consultar si cierto listado de publicaciones y cierto listado de comentarios contiene algún texto.
+Prerrequisitos para evaluación
+Implementación de TDAs, predicado socialNetworkLogin y socialNetworkPost, socialNetworkFollow, socialNetworkShare, socialNetworkToString
+Requisitos de implementación
+Debe hacer uso del operador corte “!”.
+En PostIds y CommentIds si se pasa un listado de números, el predicado debe comprobar si todos esos Ids de publicaciones y todos esos ids de comentarios contienen el texto buscado. Si alguno de estos no contiene el texto entonces el predicado debe retornar false.
+En PostIds y CommentIds si se pasa una variable entonces el predicado debe unificar en estas variables todos los ids de publicación e ids de comentario que contienen el texto buscado.
+Dominio
+socialNetwork X String X integer list
+Encabezado
+socialNetworkSearch( socialNetwork, text, PostIds, CommentIds).
+Ejemplos
+socialNetworkSearch( Sn1, “hola”, X, Z). ; Entrega en la variable X un listado con los PostIds que contienen el texto “hola” y en la variable Z el listado con los CommentIds que contienen el texto “hola”.
+socialNetworkSearch( Sn1, “hola”, [5, 13, 15], [2]). ; Comprueba si las publicaciones con id 5, con id 13 y con id 15 contienen el texto “hola”. Y si el comentario con id 2 contiene el texto “hola”.
+socialNetworkSearch( Sn1, “mundo”, X, [3]). ; Un mix: Entrega en la variable X un listado con los PostIds que contienen el texto “mundo” y comprueba si el comentario con id 3 contiene el texto “mundo”.
+
