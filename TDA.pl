@@ -47,9 +47,10 @@ getPost(Users,PostId,Post):- Users = [H|T],getPost(T,PostId,Post),H = [_,_,Post1
 getPostbyPostId(Sn1,Post,PostId):- getUsers(Sn1,Users),getPost(Users,PostId,Post). 
 
 
-%Modificadores
+%Modificadores.
 
 updateUsers(Sn,New,SnN):- Sn = [N,D,_,L], SnN = [N,D,New,L].
+%updateUsers(Sn,New,Sn1):- Sn = [N,D,_,L], Sn1 = [N,D,New,L].
 
 updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,Post,Exist],User = H1,append([Username],Exist,New),select([User,Pass,Post,Exist],Users,Users3),append([[User,Pass,Post,New]],Users3,New2),Final = New2. 
 updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User),Users = [H|T],H = [H1,_,_,_],not(User = H1),updateFollowers(Sn1,Username,T,Final). 
