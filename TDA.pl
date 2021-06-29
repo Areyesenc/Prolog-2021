@@ -19,6 +19,12 @@ comment(Sn1,Date,PostId,CommentId,Comment,Sn2):- Sn1 = [Name,_,Users,L],updateCo
 
 socialNetworkLike(Sn1,Date,PostId,CommentId,Sn2):- Sn1 = [Name,_,Users,L],updatelike(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L], write('This is a like to the Post With Id '),write(CommentId).
 
+socialNetworkShare(Sn1,Date,PostId,List,Sn2):-  Sn1 = [Name,_,Users,L],updateShare(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L],
+    length(List,X),X >= 1,write('El post con ID '),write(PostId),write(' es compartido con '),write(List).
+
+socialNetworkShare(Sn1,Date,PostId,[],Sn2):-  loggedin(Sn1,User),Sn1 = [Name,_,Users,L],updateShare(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L],
+   write('el post con id '),write(PostId),write(' es compartido con '),write(User).
+
 %selectores
 
 getUsers(Sn,Users):- Sn = [_,_,Users,_].
@@ -36,7 +42,9 @@ get_usernames(Users,[Username|ResT]):- Users = [H|T], get_usernames(T,ResT),H = 
 
 getPost([],_,[]).
 getPost(Users,PostId,Post):- Users = [H|_],H = [_,_,Post1,_],Post1 = [Post,PostId,_,_].
+getPost(Users,PostId,Post):- Users = [H|T],getPost(T,PostId,Post),H = [_,_,Post1,_],not(Post1 = [Post,PostId,_,_]).
 
+getPostbyPostId(Sn1,Post,PostId):- getUsers(Sn1,Users),getPost(Users,PostId,Post). 
 
 
 %Modificadores
@@ -44,5 +52,16 @@ getPost(Users,PostId,Post):- Users = [H|_],H = [_,_,Post1,_],Post1 = [Post,PostI
 updateUsers(Sn,New,SnN):- Sn = [N,D,_,L], SnN = [N,D,New,L].
 
 updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,Post,Exist],User = H1,append([Username],Exist,New),select([User,Pass,Post,Exist],Users,Users3),append([[User,Pass,Post,New]],Users3,New2),Final = New2. 
+updateFollowers(Sn1,Username,Users,Final):- loggedin(Sn1,User),Users = [H|T],H = [H1,_,_,_],not(User = H1),updateFollowers(Sn1,Username,T,Final). 
+updateFollowers(Sn1,Username,_,_):- loggedin(Sn1,User),User = Username,fail.
 
 updatePost(Sn1,Text,Follow,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,[Exist,[],0,[],0],Follow],User = H1,append([Text],Exist,New),select([User,Pass,[Exist,[],0,[],0],_],Users,Users3),length(Exist,Len),Len1 is Len+1,string_concat(User,Len1,Nex),append([[User,Pass,[New,Nex,0,[],0],Follow]],Users3,New2),Final = New2. 
+
+updateComment(Sn1,Comment1,PostId,_,Users,Final):- loggedin(Sn1,User),Users = [H|_],H = [H1,Pass,[Post,PostId,_,Exist,Share],Follow],string_concat(User,' - ',X),string_concat(X,Comment1,Comment),append([Comment],Exist,New),select([H1,Pass,[Post,PostId,0,[],Share],Follow],Users,Users3),append([H1,Pass,[Post,PostId,0,New,Share],Follow],Users3,New2),Final = New2.
+updateComment(Sn1,Comment,PostId,_,Users,Final):- loggedin(Sn1,_),Users = [H|T],not(H = [_,_,[_,PostId1,_,_,_],_]),not(PostId = PostId1),updateComment(Sn1,Comment,PostId,_,T,Final).
+
+updatelike(Sn1,PostId,Users,Final):- loggedin(Sn1,_),Users = [H|_],H = [H1,Pass,[Post,PostId,Exist,Comment,Share],Follow],Exist1 is Exist + 1,select([H1,Pass,[Post,PostId,Exist,Comment,Share],Follow],Users,Users3),append([H1,Pass,[Post,PostId,Exist1,Comment,Share],Follow],Users3,New2),Final = New2.
+
+updateShare(Sn1,_,Users,Final):- loggedin(Sn1,_),Users = [H|_],H = [H1,Pass,[Post,_,Likes,Comment,Exist],Follow],Exist1 is Exist + 1,select([H1,Pass,[Post,_,Likes,Comment,Exist],Follow],Users,Users3),append([H1,Pass,[Post,_,Likes,Comment,Exist1],Follow],Users3,New2),Final = New2. 
+updateShare(Sn1,_,Users,Final):- loggedin(Sn1,_),Users = [H|T],not(H = [_,_,[_,_,_,_,_],_]),updateShare(Sn1,_,T,Final). 
+
