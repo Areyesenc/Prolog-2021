@@ -1,0 +1,25 @@
+0: No realizado.
+0.25: Implementación con problemas mayores (funciona 25% de las veces o no funciona)
+0.5: Implementación con funcionamiento irregular (funciona 50% de las veces)
+0.75: Implementación con problemas menores (funciona 75% de las veces)
+1: Implementación completa sin problemas (funciona 100% de las veces)
+
+Requerimientos Funcionales. (TDA, register, login, post, follow, share, socialnetwork->string, comment, like) = todas implementadas con ejemplos.
+
+  1: Implementación completa sin problemas (funciona 100% de las veces)
+
+Requerimientos No Funcionales.
+
+  0.75: Implementación con problemas menores (funciona 75% de las veces): A pesar que he realizado mas de 10 commits, no cumplí con los 10 días acordados, a pesar de que se 
+postergó 2 veces, ahí cumpliría con el umbral establecido de los días, pero soy conciente siempre de la primera entrega debiese contar los 10 días.
+  
+Informe:
+
+  (FALTA INFORME).
+
+
+Total trabajo:
+
+Según mi autoevaluación:
+
+
