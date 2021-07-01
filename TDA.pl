@@ -17,13 +17,13 @@ socialNetworkPost(Sn1,Date,Post,List,Sn2):- Sn1 = [Name,_,Users,_],updatePost(Sn
 socialnetworkTostring(Sn1,String):- get_name(Sn1,Name),get_date(Sn1,date(D,M,Y)),getUsers(Sn1,Users),length(Users,TotalUsers), get_usernames(Users,Usernames), string_join(Usernames,'',UsernamesStr),
     string_join(["Nombre red social -",Name,"\n",'Registro -',D,'/',M,'/',Y,"\n",'Total de usuarios registrados -',TotalUsers],'',StringA), string_join([StringA,"\n","Nombre de usuario = ",UsernamesStr],'',String).
 
-comment(Sn1,Date,PostId,CommentId,Comment,Sn2):- Sn1 = [Name,_,Users,L],updateComment(Sn1,Comment,PostId,_,Users,Final),Sn2 = [Name,Date,Final,L], write('This is a comment on the Publication With Id '),write(CommentId).
+comment(Sn1,Date,PostId,CommentId,Comment,Sn2):- Sn1 = [Name,_,Users,L],updateComment(Sn1,Comment,PostId,_,Users,Final),Sn2 = [Name,Date,Final,L], write('Esto es un comentario en la publicacion con Id '),write(CommentId).
 
-socialNetworkLike(Sn1,Date,PostId,CommentId,Sn2):- Sn1 = [Name,_,Users,L],updatelike(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L], write('This is a like to the Post With Id '),write(CommentId).
+socialNetworkLike(Sn1,Date,PostId,CommentId,Sn2):- Sn1 = [Name,_,Users,L],updatelike(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L], write('Esto es un like al Post con Id '),write(CommentId).
 
 socialNetworkShare(Sn1,Date,PostId,List,Sn2):-  Sn1 = [Name,_,Users,L],updateShare(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L],
     length(List,X),X >= 1,write('El post con ID '),write(PostId),write(' es compartido con '),write(List).
-%
+
 socialNetworkShare(Sn1,Date,PostId,[],Sn2):-  loggedin(Sn1,User),Sn1 = [Name,_,Users,L],updateShare(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L],
    write('el post con id '),write(PostId),write(' es compartido con '),write(User).
 
