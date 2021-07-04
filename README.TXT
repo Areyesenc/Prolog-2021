@@ -19,4 +19,3 @@ Predicados extras para laboratorio:
 
   comment
   socialnetworklike
-  "search" (realizando...)
