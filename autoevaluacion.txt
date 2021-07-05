@@ -4,7 +4,9 @@
 0.75: Implementación con problemas menores (funciona 75% de las veces)
 1: Implementación completa sin problemas (funciona 100% de las veces)
 
-Requerimientos Funcionales. (TDA, register, login, post, follow, share, socialnetwork->string, comment, like) = todas implementadas con ejemplos.
+___
+
+Requerimientos Funcionales. (socialnetworkregister, socaialnetworklogin, socialnetworkpost, socialnetworkfollow, socialnetworkshare, socialnetworkToSting, comment, socialnetworklike, en archivo "Laboratorio2 - Prolog - AlvaroReyes.pl) = todas implementadas con ejemplos (ver archivo "Laboratorio 2 - Consultas").
 
   1: Implementación completa sin problemas (funciona 100% de las veces)
 
@@ -15,11 +17,11 @@ postergó 2 veces, ahí cumpliría con el umbral establecido de los días, pero 
   
 Informe:
 
-  (FALTA INFORME).
+  1: Implementación completa sin problemas (funciona 100% de las veces)
 
 
 Total trabajo:
 
-Según mi autoevaluación:
+  1: Implementación completa sin problemas (funciona 100% de las veces)
 
 
