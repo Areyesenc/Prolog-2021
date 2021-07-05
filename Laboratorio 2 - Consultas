@@ -1,0 +1,17 @@
+%%%%%
+
+% Algunas consultas para el laboratorio.
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3), socialNetworkRegister(Sn3, 'mmental', 'gggggg1234', Sn4).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3), socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3), socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5), socialNetworkPost(Sn5, F2, 'este es un mensaje destinado a todos', [ ], Sn6).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3), socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5),socialNetworkFollow(Sn5,"mmental",Sn6).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3),socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5), socialNetworkPost(Sn5, F2, 'este es un mensaje destinado a todos', [ ], Sn6),socialNetworkLogin(Sn6, 'jperez', 'jjjj98765', Sn7),comment(Sn7,F2,"mmental1",5,'hello',Sn8).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3),socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5), socialNetworkPost(Sn5, F2, 'este es un mensaje destinado a todos', [ ], Sn6),socialNetworkLogin(Sn6, 'jperez', 'jjjj98765', Sn7),socialNetworkLike(Sn7,F2,"mmental1",5,Sn8).
+
+% fecha(24, 5, 2021, F), socialNetwork('failbok', F, Sn1), socialNetworkRegister(Sn1, 'mmental', 'asdf', Sn2), socialNetworkRegister(Sn2, 'coni raf', 'vvbaa5', Sn3),socialNetworkRegister(Sn3, 'jperez', 'jjjj98765', Sn4), fecha(25, 5, 2021, F2), socialNetworkLogin(Sn4, 'mmental', 'asdf', Sn5), socialNetworkPost(Sn5, F2, 'este es un mensaje destinado a todos', [ ], Sn6),socialNetworkLogin(Sn6, 'jperez', 'jjjj98765', Sn7),socialNetworkShare(Sn7,F2,6,[],Sn8).
