@@ -4,7 +4,7 @@ SWI-prolog (8.2.3)
 
 TDA utilizados:
 
-project.pl
+project.pl -> Laboratorio2 - Prolog - AlvaroReyes.pl
 
 Predicados realizados
 
