@@ -1,4 +1,21 @@
-% Main.
+% Representación
+
+% name (string)
+% date (int)
+% Sn1 (string)
+% Sn2 (string)
+% Username (string)
+% Password (string)
+% SnN (int)
+% Post (string)
+% list (string)
+% string (string)
+% PostId (int)
+% comment (string)
+% CommentId (int)
+
+
+% predicado de pertenencia / constructores.
 
 % fecha(D,M,Y,F):- Fecha en el formato D/M/Y volviendo a F.
 fecha(D,M,Y,F):- F = date(D,M,Y).
@@ -36,7 +53,6 @@ socialNetworkShare(Sn1,Date,PostId,List,Sn2):-  Sn1 = [Name,_,Users,L],updateSha
 
 socialNetworkShare(Sn1,Date,PostId,[],Sn2):-  loggedin(Sn1,User),Sn1 = [Name,_,Users,L],updateShare(Sn1,PostId,Users,Final),Sn2 = [Name,Date,Final,L],
    write('el post con id '),write(PostId),write(' es compartido con: '),write(User).
-
 
 
 % selectores
